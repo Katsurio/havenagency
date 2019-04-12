@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Contact;
+use App\Http\Requests\StoreContact;
 
 class ContactController extends Controller
 {
@@ -35,14 +36,8 @@ class ContactController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreContact $request)
     {
-        $request->validate([
-            'first_name' => 'required',
-            'last_name' => 'required',
-            'email' => 'required',
-        ]);
-
         $contact = new Contact([
             'first_name' => $request->get('first_name'),
             'last_name' => $request->get('last_name'),
@@ -90,14 +85,8 @@ class ContactController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreContact $request, $id)
     {
-        $request->validate([
-            'first_name'=>'required',
-            'last_name'=>'required',
-            'email'=>'required'
-        ]);
-
         $contact = Contact::find($id);
         $contact->first_name =  $request->get('first_name');
         $contact->last_name = $request->get('last_name');

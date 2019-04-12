@@ -1,7 +1,7 @@
 @extends('base')
 
 @section('main')
-    <div class="row">
+    <div class="row border p-5 mt-5">
         <div class="col-sm-8 offset-sm-2">
             <h1 class="display-5">Create Contact</h1>
             <div>

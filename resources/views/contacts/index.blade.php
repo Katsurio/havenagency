@@ -23,7 +23,7 @@
                     <td>City</td>
                     <td>State</td>
                     <td>Zip</td>
-                    <td colspan=2>Actions</td>
+                    <td colspan=3>Actions</td>
                 </tr>
                 </thead>
                 <tbody>
@@ -38,6 +38,9 @@
                         <td>{{ $contact->city }}</td>
                         <td>{{ $contact->state }}</td>
                         <td>{{ $contact->zip }}</td>
+                        <td>
+                            <a href="{{ route('contacts.show',$contact->id) }}" class="btn btn-success">View</a>
+                        </td>
                         <td>
                             <a href="{{ route('contacts.edit',$contact->id) }}" class="btn btn-primary">Edit</a>
                         </td>

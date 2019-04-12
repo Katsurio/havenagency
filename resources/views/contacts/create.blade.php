@@ -18,17 +18,15 @@
                     @csrf
                     <div class="form-group">
                         <label for="first_name">First Name:</label>
-                        <input type="text" class="form-control" name="first_name"/>
+                        <input type="text" class="form-control" name="first_name" required/>
                     </div>
-
                     <div class="form-group">
                         <label for="last_name">Last Name:</label>
-                        <input type="text" class="form-control" name="last_name"/>
+                        <input type="text" class="form-control" name="last_name" required/>
                     </div>
-
                     <div class="form-group">
                         <label for="email">Email:</label>
-                        <input type="text" class="form-control" name="email"/>
+                        <input type="text" class="form-control" name="email" required/>
                     </div>
                     <div class="form-group">
                         <label for="phone">Phone:</label>
@@ -36,7 +34,7 @@
                     </div>
                     <div class="form-group">
                         <label for="birthday">Birthday:</label>
-                        <input type="text" class="form-control" name="birthday"/>
+                        <input class="datepicker" id="datepicker" type="text" name="birthday"/>
                     </div>
                     <div class="form-group">
                         <label for="address">Address:</label>
@@ -59,4 +57,17 @@
             </div>
         </div>
     </div>
+    <script type="text/javascript">
+        (function($) {
+            $( "#datepicker" ).datepicker({
+                minDate: new Date(1900,0,0),
+                maxDate: new Date(2019,0,0,),
+                yearRange: '1900:2019' ,
+                changeYear: true,
+                changeMonth: true,
+                changeDay: true,
+                dateFormat: 'dd-mm-yy'
+            });
+        })(jQuery);
+    </script>
 @endsection

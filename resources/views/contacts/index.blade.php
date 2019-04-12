@@ -9,6 +9,19 @@
                 </div>
             @endif
         </div>
+        <div>
+            <form action="/search" method="get" role="search">
+                {{ csrf_field() }}
+                <div class="input-group">
+                    <input type="text" class="form-control" name="q"
+                           placeholder="Search users"> <span class="input-group-btn">
+                        <button type="submit" class="btn btn-primary">
+                            Submit
+                        </button>
+                    </span>
+                </div>
+            </form>
+        </div>
         <div class="col-sm-12">
             <h1 class="display-5">Contacts</h1>
             <table class="table table-striped table-dark table-bordered table-responsive w-100 d-md-table">

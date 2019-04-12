@@ -71,4 +71,4 @@
             dateFormat: 'yy-mm-dd'
         });
     </script>
-    @endsection
+@endsection

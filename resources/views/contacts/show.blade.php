@@ -44,9 +44,7 @@
                             <td>{{ $contact->zip }}</td>
                         </tr>
                     </table>
-                    <p class="card-text">
-                        <small class="text-muted">Last updated {{ $contact->updated_at }}</small>
-                    </p>
+                    <p class="card-text"><small class="text-muted">Last updated {{ $contact->updated_at }}</small></p>
                 </div>
             </div>
             <div>
@@ -60,7 +58,6 @@
 @section('footer')
     <script>
         var gmap;
-
         function initMap() {
             gmap = new google.maps.Map(document.getElementById('gmap'), {
                 center: {lat: -34.397, lng: 150.644},
@@ -72,4 +69,3 @@
             async defer>
     </script>
 @endsection
-

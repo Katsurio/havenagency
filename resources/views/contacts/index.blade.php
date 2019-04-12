@@ -20,6 +20,16 @@
                         </button>
                     </span>
                 </div>
+                <div class="form-group">
+                    <select name="items">
+                        <option value="5" @if($items == 5) selected @endif >5</option>
+                        <option value="10" @if($items == 10) selected @endif >10</option>
+                        <option value="25" @if($items == 25) selected @endif >25</option>
+                        <option value="50" @if($items == 50) selected @endif >50</option>
+                        <option value="75" @if($items == 75) selected @endif >75</option>
+                        <option value="100" @if($items == 100) selected @endif >100</option>
+                    </select>
+                </div>
             </form>
         </div>
         <div class="col-sm-12">

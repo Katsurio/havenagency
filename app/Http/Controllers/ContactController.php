@@ -101,7 +101,7 @@ class ContactController extends Controller
     public function search(Request $request)
     {
         $q = $request->q;
-        $items = $request->items ?? 10;
+        $items = $request->items ?? 5;
         $contacts = Contact::where('first_name','LIKE','%'.$q.'%')->orWhere('email','LIKE','%'.$q.'%')->paginate($items);
         return view('contacts.index', compact('contacts', 'items'));
     }

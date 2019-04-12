@@ -57,15 +57,32 @@
 
 @section('footer')
     <script>
-        var gmap;
+        var geocoder;
+        var map;
+        var address = "{{ $contact->address }}, {{ $contact->city }}, {{ $contact->state }}, {{ $contact->zip }}";
         function initMap() {
-            gmap = new google.maps.Map(document.getElementById('gmap'), {
-                center: {lat: -34.397, lng: 150.644},
+            var map = new google.maps.Map(document.getElementById('gmap'), {
                 zoom: 8
+            });
+            geocoder = new google.maps.Geocoder();
+            codeAddress(geocoder, map);
+        }
+
+        function codeAddress(geocoder, map) {
+            geocoder.geocode({'address': address}, function(results, status) {
+                if (status === 'OK') {
+                    map.setCenter(results[0].geometry.location);
+                    var marker = new google.maps.Marker({
+                        map: map,
+                        position: results[0].geometry.location
+                    });
+                } else {
+                    //alert('Geocode was not successful for the following reason: ' + status);
+                }
             });
         }
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC4SKofTOIhPDNQl6T62OxPkG9IOuzdNE4&callback=initMap"
-            async defer>
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key={{ env('GMAPS_API_KEY') }}&callback=initMap">
     </script>
 @endsection

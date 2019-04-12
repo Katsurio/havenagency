@@ -62,7 +62,7 @@
                         <td>{{ $contact->state }}</td>
                         <td>{{ $contact->zip }}</td>
                         <td>
-                            <a href="{{ route('contacts.show',$contact->id) }}" class="btn btn-success">View</a>
+                            <a href="{{ route('contacts.show',$contact->id) }}" class="btn btn-warning">View</a>
                         </td>
                         <td>
                             <a href="{{ route('contacts.edit',$contact->id) }}" class="btn btn-primary">Edit</a>
@@ -80,7 +80,7 @@
             </table>
             {!! $contacts->links() !!}
             <div>
-                <a href="{{ route('contacts.create')}}" class="btn btn-primary m-3">New contact</a>
+                <a href="{{ route('contacts.create')}}" class="btn btn-success m-3">New contact</a>
             </div>
         </div>
     </div>

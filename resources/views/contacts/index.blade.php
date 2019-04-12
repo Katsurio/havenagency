@@ -10,7 +10,7 @@
             @endif
         </div>
         <div>
-            <form action="/search" method="get" role="search">
+            <form action="/search" method="post" role="search">
                 {{ csrf_field() }}
                 <div class="input-group">
                     <input type="text" class="form-control" name="q"

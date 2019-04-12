@@ -14,7 +14,8 @@
 ###Our web-app should be able to:
 1. Create a new contact
 2. List contacts alphabetically
-3. Modify the details of an existing contact 4. Delete a contact
+3. Modify the details of an existing contact 
+4. Delete a contact
 5. A contact contains the following fields:
 a. first name b. last name c. email
 d. phone

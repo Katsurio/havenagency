@@ -45,10 +45,10 @@ class ContactController extends Controller
 
         $contact = new Contact([
             'first_name' => $request->get('first_name'),
-            'last_name' => $request->get('first_name'),
+            'last_name' => $request->get('last_name'),
             'email' => $request->get('email'),
             'phone' => $request->get('phone'),
-            'birthday' => $request->get('birthday'),
+            'birthday' => date('Y-m-d', strtotime($request->get('birthday'))),
             'address' => $request->get('address'),
             'city' => $request->get('city'),
             'state' => $request->get('state'),
@@ -56,7 +56,7 @@ class ContactController extends Controller
         ]);
 
         $contact->save();
-        return redirect('/contacts')->with('success', 'Contact saved.');
+        return redirect('/contacts')->with('success', 'Contact Saved.');
     }
 
     /**
@@ -78,7 +78,8 @@ class ContactController extends Controller
      */
     public function edit($id)
     {
-        //
+        $contact = Contact::find($id);
+        return view('contacts.edit', compact('contact'));
     }
 
     /**
@@ -90,7 +91,26 @@ class ContactController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'first_name'=>'required',
+            'last_name'=>'required',
+            'email'=>'required'
+        ]);
+
+        $contact = Contact::find($id);
+        $contact->first_name =  $request->get('first_name');
+        $contact->last_name = $request->get('last_name');
+        $contact->email = $request->get('email');
+        $contact->phone = $request->get('phone');
+        $contact->birthday = date('Y-m-d', strtotime($request->get('birthday')));
+        $contact->address = $request->get('address');
+        $contact->city = $request->get('city');
+        $contact->state = $request->get('state');
+        $contact->zip = $request->get('zip');
+
+        $contact->save();
+
+        return redirect('/contacts')->with('success', 'Contact Updated.');
     }
 
     /**
@@ -101,6 +121,9 @@ class ContactController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $contact = Contact::find($id);
+        $contact->delete();
+
+        return redirect('/contacts')->with('success', 'Contact Deleted.');
     }
 }

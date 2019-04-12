@@ -3,7 +3,7 @@
 @section('main')
     <div class="row">
         <div class="col-sm-8 offset-sm-2">
-            <h1 class="display-3">Add a contact</h1>
+            <h1 class="display-5">Create Contact</h1>
             <div>
                 @if ($errors->any())
                     <div class="alert alert-danger">
@@ -62,11 +62,11 @@
             $( "#datepicker" ).datepicker({
                 minDate: new Date(1900,0,0),
                 maxDate: new Date(2019,0,0,),
-                yearRange: '1900:2019' ,
+                yearRange: '1900:2019',
                 changeYear: true,
                 changeMonth: true,
                 changeDay: true,
-                dateFormat: 'dd-mm-yy'
+                dateFormat: 'yy-mm-dd'
             });
         })(jQuery);
     </script>

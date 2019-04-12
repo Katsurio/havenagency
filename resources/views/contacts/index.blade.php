@@ -3,8 +3,15 @@
 @section('main')
     <div class="row">
         <div class="col-sm-12">
-            <h1 class="display-3">Contacts</h1>
-            <table class="table table-striped">
+            @if(session()->get('success'))
+                <div class="alert alert-success">
+                    {{ session()->get('success') }}
+                </div>
+            @endif
+        </div>
+        <div class="col-sm-12">
+            <h1 class="display-5">Contacts</h1>
+            <table class="table table-striped table-dark table-bordered table-responsive w-100 d-md-table">
                 <thead>
                 <tr>
                     <td>ID</td>
@@ -23,10 +30,10 @@
                 @foreach($contacts as $contact)
                     <tr>
                         <td>{{ $contact->id }}</td>
-                        <td>{{ $contact->first_name }} {{$contact->last_name}}</td>
+                        <td>{{ $contact->first_name }} {{ $contact->last_name }}</td>
                         <td>{{ $contact->email }}</td>
                         <td>{{ $contact->phone }}</td>
-                        <td>{{ $contact->birthday }}</td>
+                        <td>{{ date('m-d-Y', strtotime($contact->birthday)) }}</td>
                         <td>{{ $contact->address }}</td>
                         <td>{{ $contact->city }}</td>
                         <td>{{ $contact->state }}</td>
@@ -46,6 +53,9 @@
                 </tbody>
             </table>
             {!! $contacts->links() !!}
+            <div>
+                <a href="{{ route('contacts.create')}}" class="btn btn-primary m-3">New contact</a>
+            </div>
         <div>
     </div>
 @endsection

@@ -59,6 +59,6 @@
             <div>
                 <a href="{{ route('contacts.create')}}" class="btn btn-primary m-3">New contact</a>
             </div>
-        <div>
+        </div>
     </div>
 @endsection

@@ -44,17 +44,23 @@
                             <td>{{ $contact->zip }}</td>
                         </tr>
                     </table>
-                    <p class="card-text"><small class="text-muted">Last updated {{ $contact->updated_at }}</small></p>
+                    <p class="card-text">
+                        <small class="text-muted">Last updated {{ $contact->updated_at }}</small>
+                    </p>
                 </div>
             </div>
             <div>
                 <a href="{{ route('contacts.create')}}" class="btn btn-success m-3">New contact</a>
                 <a href="{{ route('contacts.index')}}" class="btn btn-primary m-3">View contacts</a>
             </div>
-        <div>
+        </div>
     </div>
+@endsection
+
+@section('footer')
     <script>
         var gmap;
+
         function initMap() {
             gmap = new google.maps.Map(document.getElementById('gmap'), {
                 center: {lat: -34.397, lng: 150.644},

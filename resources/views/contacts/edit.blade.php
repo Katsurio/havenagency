@@ -58,17 +58,18 @@
             </form>
         </div>
     </div>
+@endsection
+
+@section('footer')
     <script type="text/javascript">
-        (function($) {
-            $( "#datepicker" ).datepicker({
-                minDate: new Date(1900,0,0),
-                maxDate: new Date(2019,0,0,),
-                yearRange: '1900:2019',
-                changeYear: true,
-                changeMonth: true,
-                changeDay: true,
-                dateFormat: 'yy-mm-dd'
-            });
-        })(jQuery);
+        $( "#datepicker" ).datepicker({
+            minDate: new Date(1900,0,0),
+            maxDate: new Date(2019,0,0,),
+            yearRange: '1900:2019',
+            changeYear: true,
+            changeMonth: true,
+            changeDay: true,
+            dateFormat: 'yy-mm-dd'
+        });
     </script>
 @endsection

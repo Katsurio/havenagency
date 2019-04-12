@@ -16,8 +16,7 @@ class ContactController extends Controller
     public function index()
     {
         $contacts = Contact::latest()->paginate(5);
-        return view('contacts.index', compact('contacts'))
-            ->with('i', (request()->input('page', 1) - 1) * 5);
+        return view('contacts.index', compact('contacts'));
     }
 
     /**
@@ -38,19 +37,7 @@ class ContactController extends Controller
      */
     public function store(StoreContact $request)
     {
-        $contact = new Contact([
-            'first_name' => $request->get('first_name'),
-            'last_name' => $request->get('last_name'),
-            'email' => $request->get('email'),
-            'phone' => $request->get('phone'),
-            'birthday' => date('Y-m-d', strtotime($request->get('birthday'))),
-            'address' => $request->get('address'),
-            'city' => $request->get('city'),
-            'state' => $request->get('state'),
-            'zip' => $request->get('zip'),
-        ]);
-
-        $contact->save();
+        $contact = Contact::storeContact($request->all());
         return redirect('/contacts')->with('success', 'Contact Saved.');
     }
 
@@ -85,21 +72,9 @@ class ContactController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreContact $request, $id)
+    public function update(StoreContact $request, Contact $contact)
     {
-        $contact = Contact::find($id);
-        $contact->first_name =  $request->get('first_name');
-        $contact->last_name = $request->get('last_name');
-        $contact->email = $request->get('email');
-        $contact->phone = $request->get('phone');
-        $contact->birthday = date('Y-m-d', strtotime($request->get('birthday')));
-        $contact->address = $request->get('address');
-        $contact->city = $request->get('city');
-        $contact->state = $request->get('state');
-        $contact->zip = $request->get('zip');
-
-        $contact->save();
-
+        $contact->updateContact($request->all());
         return redirect('/contacts')->with('success', 'Contact Updated.');
     }
 

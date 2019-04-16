@@ -39,7 +39,7 @@ class ContactController extends Controller
     public function store(StoreContact $request)
     {
         $contact = Contact::storeContact($request->all());
-        return redirect('/contacts')->with('success', 'Contact Saved.');
+        return redirect('/contacts')->with('success', 'Contact Saved.')->withInput();
     }
 
     /**

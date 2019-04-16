@@ -33,7 +33,7 @@ class ContactController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param StoreContact $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreContact $request)
@@ -45,7 +45,7 @@ class ContactController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -57,7 +57,7 @@ class ContactController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -69,8 +69,8 @@ class ContactController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param StoreContact $request
+     * @param Contact $contact
      * @return \Illuminate\Http\Response
      */
     public function update(StoreContact $request, Contact $contact)
@@ -82,7 +82,7 @@ class ContactController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
@@ -96,14 +96,14 @@ class ContactController extends Controller
     /**
      * Search for contact
      *
-     * @param  \App\Contact $contact
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
     public function search(Request $request)
     {
         $q = $request->q;
         $items = $request->items ?? 5;
-        $contacts = Contact::where('first_name','LIKE','%'.$q.'%')->orWhere('email','LIKE','%'.$q.'%')->paginate($items);
+        $contacts = Contact::where('first_name', 'LIKE', '%' . $q . '%')->orWhere('email', 'LIKE', '%' . $q . '%')->paginate($items);
         return view('contacts.index', compact('contacts', 'items'));
     }
 }

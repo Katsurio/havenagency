@@ -76,7 +76,7 @@ class ContactController extends Controller
     public function update(StoreContact $request, Contact $contact)
     {
         $contact->updateContact($request->all());
-        return redirect('/contacts')->with('success', 'Contact Updated.');
+        return redirect('/contacts')->with('success', 'Contact Updated.')->withInput();
     }
 
     /**

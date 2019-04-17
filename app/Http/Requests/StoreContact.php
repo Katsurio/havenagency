@@ -31,7 +31,7 @@ class StoreContact extends FormRequest
             'birthday' => 'date_format:"Y-m-d"|nullable',
             'address' => 'required_with:city,state,zip|string',
             'city' => 'required_with:address|alpha|nullable',
-            'state' => 'required_with:address|nullable',
+            'state' => 'required_with:address|alpha|max:2|nullable',
             'zip' => 'required_with:address|numeric|digits:5|nullable'
         ];
     }

@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use App\Contact;
 use App\Http\Requests\StoreContact;
+use Illuminate\Support\Facades\Redirect;
 
 class ContactController extends Controller
 {
@@ -38,7 +40,14 @@ class ContactController extends Controller
      */
     public function store(StoreContact $request)
     {
-        $contact = Contact::storeContact($request->all());
+        try {
+            $contact = Contact::storeContact($request->all());
+        } catch (QueryException $e) {
+            $errorCode = $e->errorInfo[1];
+            if ($errorCode == 1062) {
+                return Redirect::back()->withErrors('Duplicate Email. Please select a different email.')->withInput();
+            }
+        }
         return redirect('/contacts')->with('success', 'Contact Saved.')->withInput();
     }
 

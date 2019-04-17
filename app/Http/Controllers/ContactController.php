@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Database\QueryException;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Contact;
 use App\Http\Requests\StoreContact;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Redirect;
 
 class ContactController extends Controller
@@ -13,7 +15,7 @@ class ContactController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
@@ -25,7 +27,7 @@ class ContactController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
@@ -36,7 +38,7 @@ class ContactController extends Controller
      * Store a newly created resource in storage.
      *
      * @param StoreContact $request
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
+     * @return RedirectResponse|Response
      */
     public function store(StoreContact $request)
     {
@@ -55,7 +57,7 @@ class ContactController extends Controller
      * Display the specified resource.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function show($id)
     {
@@ -67,7 +69,7 @@ class ContactController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function edit($id)
     {
@@ -80,11 +82,18 @@ class ContactController extends Controller
      *
      * @param StoreContact $request
      * @param Contact $contact
-     * @return \Illuminate\Http\Response
+     * @return RedirectResponse|Response
      */
     public function update(StoreContact $request, Contact $contact)
     {
-        $contact->updateContact($request->all());
+        try {
+            $contact->updateContact($request->all());
+        } catch (QueryException $e) {
+            $errorCode = $e->errorInfo[1];
+            if ($errorCode == 1062) {
+                return Redirect::back()->withErrors('Duplicate Email. Please select a different email.')->withInput();
+            }
+        }
         return redirect('/contacts')->with('success', 'Contact Updated.')->withInput();
     }
 
@@ -92,7 +101,7 @@ class ContactController extends Controller
      * Remove the specified resource from storage.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function destroy($id)
     {
@@ -106,7 +115,7 @@ class ContactController extends Controller
      * Search for contact
      *
      * @param Request $request
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function search(Request $request)
     {

@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use App\Contact;
 use App\Http\Requests\StoreContact;
+use Illuminate\Support\Facades\Redirect;
 
 class ContactController extends Controller
 {
@@ -33,19 +35,26 @@ class ContactController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param StoreContact $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
      */
     public function store(StoreContact $request)
     {
-        $contact = Contact::storeContact($request->all());
-        return redirect('/contacts')->with('success', 'Contact Saved.');
+        try {
+            $contact = Contact::storeContact($request->all());
+        } catch (QueryException $e) {
+            $errorCode = $e->errorInfo[1];
+            if ($errorCode == 1062) {
+                return Redirect::back()->withErrors('Duplicate Email. Please select a different email.')->withInput();
+            }
+        }
+        return redirect('/contacts')->with('success', 'Contact Saved.')->withInput();
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -57,7 +66,7 @@ class ContactController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -69,20 +78,20 @@ class ContactController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param StoreContact $request
+     * @param Contact $contact
      * @return \Illuminate\Http\Response
      */
     public function update(StoreContact $request, Contact $contact)
     {
         $contact->updateContact($request->all());
-        return redirect('/contacts')->with('success', 'Contact Updated.');
+        return redirect('/contacts')->with('success', 'Contact Updated.')->withInput();
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
@@ -96,14 +105,14 @@ class ContactController extends Controller
     /**
      * Search for contact
      *
-     * @param  \App\Contact $contact
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
     public function search(Request $request)
     {
         $q = $request->q;
         $items = $request->items ?? 5;
-        $contacts = Contact::where('first_name','LIKE','%'.$q.'%')->orWhere('email','LIKE','%'.$q.'%')->paginate($items);
+        $contacts = Contact::where('first_name', 'LIKE', '%' . $q . '%')->orWhere('email', 'LIKE', '%' . $q . '%')->paginate($items);
         return view('contacts.index', compact('contacts', 'items'));
     }
 }
